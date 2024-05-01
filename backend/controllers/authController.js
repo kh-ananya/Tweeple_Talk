@@ -42,7 +42,7 @@ export const signup = async(req,res)=>{
         fullname,
         username,
         email,
-        password:hashPass
+        password:hashPass,
       })
       
       if(newUser)
@@ -58,7 +58,7 @@ export const signup = async(req,res)=>{
             followers: newUser.followers,
             following: newUser.following,
             profileImg: newUser.profileImg,
-            coverImg: newUser.coverImg
+            coverImg: newUser.coverImg,
          })
       }
       else{
@@ -96,7 +96,7 @@ export const login = async(req,res)=>{
          followers: user.followers,
          following: user.following,
          profileImg: user.profileImg,
-         coverImg: user.coverImg
+         coverImg: user.coverImg,
       })
 
    }catch(err)

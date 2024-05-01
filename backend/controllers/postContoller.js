@@ -29,7 +29,7 @@ export const createPost = async(req,res) => {
        const newPost = new Post({
         user:userId,
         text,
-        img
+        img,
        })
 
        await newPost.save()
@@ -100,7 +100,7 @@ export const commentOnPost = async(req,res) => {
      const post = await Post.findById(postId)
      if(!post)
      {
-         return res.status(404).jon({
+         return res.status(404).json({
             error : "Post not found"
          })
      }
@@ -144,10 +144,8 @@ export const likeUnlikePost = async(req,res) => {
              await Post.updateOne({_id:postId},{$pull: {likes: userId}})
              await Post.updateOne({_id:userId},{$pull:{likedPosts: postId}})
 
-            //  const updateLikes = post.likes.filter((id)=> id.toString() !== userId.toString())
-             res.status(200).json({
-                message: "Post unliked success"
-             })
+            const updateLikes = post.likes.filter((id)=> id.toString() !== userId.toString())
+             res.status(200).json(updateLikes)
         }
         else
         {   
@@ -159,14 +157,14 @@ export const likeUnlikePost = async(req,res) => {
             const notification = new Notification ({
              from: userId,
              to : post.user,
-            type : "like"
+            type : "like",
             })
 
             await notification.save()
 
-            res.status(200).json({
-                message : "Post Liked success"
-            })
+            const updateLikes = post.likes;
+
+            res.status(200).json(updateLikes)
         }
         
     } catch (err) {
